@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Search, X, Sparkles, Star, Lock, Heart, ArrowUpDown, Filter } from 'lucide-react';
+import { Search, X, Star, Lock, Heart, ArrowUpDown, Filter, Sparkles } from 'lucide-react';
 import { FilterType, SortType } from '../types';
 
 interface SearchAndFiltersProps {
@@ -44,12 +44,12 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
   }, []);
 
   return (
-    <div className="space-y-4 mb-6">
-      {/* Search Bar and Sort */}
-      <div className="flex flex-col md:flex-row gap-3">
+    <div className="space-y-2.5 mb-4 bg-[#11141A] p-3 rounded border border-[#252A34]">
+      {/* Search Bar and Sort Row */}
+      <div className="flex flex-col md:flex-row gap-2">
         <div className="relative flex-1">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-            <Search className="w-4 h-4" />
+          <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-gray-500">
+            <Search className="w-3.5 h-3.5" />
           </div>
           <input
             ref={searchInputRef}
@@ -57,158 +57,164 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
             id="searchInput"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari preset, template, atau kode asset (cth: XML, Jedag Jedug, 001)..."
-            className="w-full pl-10 pr-20 py-3 rounded-2xl bg-neutral-900/90 border border-neutral-800 text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm"
+            placeholder="Search query / filter by code (e.g. 001, XML, Jedag Jedug)..."
+            className="w-full pl-8 pr-16 py-1.5 rounded bg-[#161B22] border border-[#30363D] text-xs font-mono text-[#E5E7EB] placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20 transition-colors"
           />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
+          <div className="absolute inset-y-0 right-0 pr-2 flex items-center gap-1">
             {searchQuery ? (
               <button
                 onClick={() => setSearchQuery('')}
-                className="p-1 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800 rounded-lg transition-colors"
-                title="Hapus pencarian"
+                className="p-1 text-gray-400 hover:text-gray-200 hover:bg-[#1C212B] rounded transition-colors"
+                title="Clear"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             ) : (
-              <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono text-neutral-500 bg-neutral-800 border border-neutral-700 rounded">
+              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[9px] font-mono text-gray-400 bg-[#1C212B] border border-[#2D333E] rounded">
                 /
               </kbd>
             )}
           </div>
         </div>
 
-        {/* Sort Selector */}
+        {/* Sort Selector & Reset */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1 md:flex-none">
             <select
               id="sort-select"
               value={sortType}
               onChange={(e) => setSortType(e.target.value as SortType)}
-              className="w-full appearance-none pl-9 pr-8 py-3 rounded-2xl bg-neutral-900/90 border border-neutral-800 text-xs font-medium text-neutral-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 cursor-pointer transition-all"
+              className="w-full md:w-auto appearance-none pl-7 pr-6 py-1.5 rounded bg-[#161B22] border border-[#30363D] text-[11px] font-mono text-gray-300 focus:outline-none focus:border-green-500 cursor-pointer transition-colors"
             >
-              <option value="newest">🕒 Terbaru Ditambahkan</option>
-              <option value="popular">🔥 Paling Banyak Didownload</option>
-              <option value="name-asc">🔤 Nama A - Z</option>
-              <option value="code-asc">🏷️ Urutkan Berdasarkan Kode</option>
+              <option value="newest">SORT: NEWEST FIRST</option>
+              <option value="popular">SORT: MOST DOWNLOADED</option>
+              <option value="name-asc">SORT: NAME (A - Z)</option>
+              <option value="code-asc">SORT: CODE INDEX</option>
             </select>
-            <ArrowUpDown className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
+            <ArrowUpDown className="w-3 h-3 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
           </div>
 
           {isFiltered && (
             <button
               onClick={onReset}
-              className="px-3.5 py-3 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors whitespace-nowrap"
+              className="h-8 px-2.5 rounded bg-[#1C212B] hover:bg-[#252A34] border border-[#2D333E] text-[11px] font-mono text-green-400 hover:text-green-300 transition-colors whitespace-nowrap"
             >
-              Reset
+              RESET
             </button>
           )}
         </div>
       </div>
 
-      {/* Main Filter Chips */}
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          onClick={() => setActiveFilter('all')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'all'
-              ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          Semua
-        </button>
-
-        <button
-          onClick={() => setActiveFilter('free')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'free'
-              ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-600/30'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-emerald-300'
-          }`}
-        >
-          Gratis
-        </button>
-
-        <button
-          onClick={() => setActiveFilter('pro')}
-          className={`inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'pro'
-              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm shadow-purple-600/30'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-purple-300'
-          }`}
-        >
-          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-          <span>Pro</span>
-        </button>
-
-        <button
-          onClick={() => setActiveFilter('paid')}
-          className={`inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'paid'
-              ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/30'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-rose-300'
-          }`}
-        >
-          <Lock className="w-3 h-3" />
-          <span>Paid</span>
-        </button>
-
-        <button
-          onClick={() => setActiveFilter('new')}
-          className={`inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'new'
-              ? 'bg-amber-600 text-white shadow-sm shadow-amber-600/30'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-amber-300'
-          }`}
-        >
-          <Sparkles className="w-3 h-3" />
-          <span>Baru</span>
-        </button>
-
-        <button
-          onClick={() => setActiveFilter(activeFilter === 'fav' ? 'all' : 'fav')}
-          className={`inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-            activeFilter === 'fav'
-              ? 'bg-rose-500/20 border border-rose-500/40 text-rose-300'
-              : 'bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-rose-300'
-          }`}
-        >
-          <Heart className={`w-3 h-3 ${activeFilter === 'fav' ? 'fill-rose-400 text-rose-400' : ''}`} />
-          <span>Favorit</span>
-        </button>
-      </div>
-
-      {/* Category Horizontal Filter Pills */}
-      {categories.length > 0 && (
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span className="text-neutral-500 text-[11px] font-medium shrink-0 mr-1 flex items-center gap-1">
-            <Filter className="w-3 h-3" /> Kategori:
+      {/* Main Filter Chips & Categories */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#252A34]/60">
+        <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+          <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mr-1">
+            TYPE:
           </span>
           <button
-            onClick={() => setSelectedCategory('all')}
-            className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
-              selectedCategory === 'all'
-                ? 'bg-neutral-800 text-neutral-100 border border-neutral-700'
-                : 'bg-neutral-950/60 hover:bg-neutral-900 text-neutral-400 border border-neutral-800/80'
+            onClick={() => setActiveFilter('all')}
+            className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'all'
+                ? 'bg-green-600 text-white font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-gray-400'
             }`}
           >
-            Semua
+            ALL
           </button>
-          {categories.map((cat) => (
+
+          <button
+            onClick={() => setActiveFilter('free')}
+            className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'free'
+                ? 'bg-emerald-600 text-white font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-emerald-400'
+            }`}
+          >
+            FREE
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('pro')}
+            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'pro'
+                ? 'bg-purple-600 text-white font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-purple-400'
+            }`}
+          >
+            <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+            PRO
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('paid')}
+            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'paid'
+                ? 'bg-rose-600 text-white font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-rose-400'
+            }`}
+          >
+            <Lock className="w-2.5 h-2.5" />
+            PAID
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('new')}
+            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'new'
+                ? 'bg-amber-600 text-white font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-amber-400'
+            }`}
+          >
+            <Sparkles className="w-2.5 h-2.5" />
+            NEW
+          </button>
+
+          <button
+            onClick={() => setActiveFilter(activeFilter === 'fav' ? 'all' : 'fav')}
+            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+              activeFilter === 'fav'
+                ? 'bg-[#2D1B24] border border-red-500/50 text-red-400 font-bold'
+                : 'bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-gray-400'
+            }`}
+          >
+            <Heart className={`w-2.5 h-2.5 ${activeFilter === 'fav' ? 'fill-red-400 text-red-400' : ''}`} />
+            FAV
+          </button>
+        </div>
+
+        {/* Category Horizontal Filter Pills */}
+        {categories.length > 0 && (
+          <div className="flex items-center gap-1 overflow-x-auto pb-0.5 text-xs font-mono max-w-full">
+            <span className="text-gray-500 text-[10px] uppercase font-bold shrink-0 mr-1 flex items-center gap-0.5">
+              <Filter className="w-2.5 h-2.5" /> CAT:
+            </span>
             <button
-              key={cat.name}
-              onClick={() => setSelectedCategory(selectedCategory === cat.name ? 'all' : cat.name)}
-              className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
-                selectedCategory === cat.name
-                  ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                  : 'bg-neutral-950/60 hover:bg-neutral-900 text-neutral-400 border border-neutral-800/80 hover:text-neutral-300'
+              onClick={() => setSelectedCategory('all')}
+              className={`px-1.5 py-0.5 rounded shrink-0 text-[10px] font-mono transition-colors ${
+                selectedCategory === 'all'
+                  ? 'bg-gray-200 text-gray-900 font-bold'
+                  : 'bg-[#161B22] hover:bg-[#1C212B] text-gray-400 border border-[#30363D]'
               }`}
             >
-              {cat.name} <span className="text-[10px] text-neutral-500 ml-1">({cat.count})</span>
+              ALL
             </button>
-          ))}
-        </div>
-      )}
+            {categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setSelectedCategory(selectedCategory === cat.name ? 'all' : cat.name)}
+                className={`px-1.5 py-0.5 rounded shrink-0 text-[10px] font-mono transition-colors ${
+                  selectedCategory === cat.name
+                    ? 'bg-[#1C212B] text-green-400 border border-green-500/50 font-bold'
+                    : 'bg-[#161B22] hover:bg-[#1C212B] text-gray-400 border border-[#30363D]'
+                }`}
+              >
+                {cat.name} <span className="text-gray-500">[{cat.count}]</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
+

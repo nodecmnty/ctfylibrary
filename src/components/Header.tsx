@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, Heart, RefreshCw, Radio, Sparkles } from 'lucide-react';
+import { Sun, Moon, Heart, RefreshCw, Activity, Database } from 'lucide-react';
 import { SyncStatusType } from '../types';
 
 interface HeaderProps {
@@ -24,104 +24,125 @@ export const Header: React.FC<HeaderProps> = ({
   isLoading,
 }) => {
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-xl border-b transition-colors duration-200 bg-neutral-950/80 border-neutral-800/80 text-neutral-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Brand Logo */}
-          <a
-            href="/"
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
-          >
-            <div className="relative flex items-center">
-              <svg
-                className="h-9 w-auto transform transition-transform group-hover:scale-105"
-                viewBox="0 0 500 200"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
-                  <path d="M1 1823 l0 -178 20 62 c23 74 67 134 134 185 91 69 116 73 420 73 260 0 272 -1 328 -23 81 -33 166 -114 203 -194 l29 -63 3 -287 3 -288 -160 0 -159 0 -4 193 c-3 216 -10 242 -84 307 -51 44 -93 60 -161 60 -100 -1 -175 -46 -219 -132 l-24 -47 0 -493 c0 -476 1 -493 21 -534 74 -153 275 -186 396 -65 61 61 68 87 71 299 l4 192 159 0 160 0 -3 -293 -3 -292 -29 -60 c-38 -76 -105 -143 -181 -181 l-60 -29 -290 0 -290 0 -60 28 c-103 48 -190 151 -214 254 -6 27 -9 -13 -10 -139 l-1 -178 2500 0 2500 0 -1 553 c0 303 -4 541 -8 527 -14 -45 -39 -84 -73 -116 -60 -57 -92 -68 -215 -72 l-113 -4 0 -429 0 -429 -160 0 -160 0 0 429 0 429 -112 4 c-125 4 -168 19 -227 79 -68 67 -66 54 -69 489 l-3 396 23 33 c39 58 72 76 137 76 48 0 64 -5 96 -29 61 -47 65 -67 65 -319 0 -265 7 -302 74 -371 98 -100 254 -98 353 6 57 59 61 82 64 328 1 123 6 242 11 264 11 51 60 103 109 118 74 22 158 -15 189 -85 l20 -42 0 83 0 82 -2500 0 -2500 0 1 -177z m1639 -148 l0 -295 405 0 405 0 0 -135 0 -135 -405 0 -405 0 0 -302 c0 -341 2 -351 80 -422 130 -117 337 -62 396 106 10 29 14 89 14 219 l0 179 161 0 160 0 -3 -307 -3 -308 -28 -53 c-37 -70 -97 -128 -166 -161 l-56 -26 -315 0 -315 0 -49 25 c-77 39 -132 94 -168 168 l-33 67 -3 837 -3 838 166 0 165 0 0 -295z m1798 277 c118 -37 197 -116 234 -234 14 -46 18 -92 18 -199 l0 -139 -164 0 -164 0 -4 64 c-8 126 -98 216 -223 224 -78 5 -120 -8 -174 -54 -76 -65 -85 -96 -89 -281 l-4 -163 411 0 411 0 0 -140 0 -140 -410 0 -410 0 0 -430 0 -430 -160 0 -160 0 0 830 c0 812 0 830 21 884 24 66 96 149 153 178 84 43 110 47 388 47 232 1 274 -1 326 -17z"/>
-                </g>
-              </svg>
-            </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-bold text-sm tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
-                MOTION ASSETS
+    <header className="h-14 border-b border-[#252A34] bg-[#11141A] flex items-center justify-between px-3 sm:px-6 sticky top-0 z-40 select-none">
+      {/* Brand & Status */}
+      <div className="flex items-center gap-3">
+        <a
+          href="/"
+          className="flex items-center gap-2.5 group focus:outline-none"
+        >
+          <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center font-bold text-white shadow-md shadow-green-900/30 text-xs font-mono tracking-tighter">
+            CT
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold tracking-tight uppercase text-[#E5E7EB]">
+                CTFY &bull; Motion Hub
               </span>
-              <span className="text-[10px] text-neutral-400 font-mono leading-none">by @imctfy</span>
+              <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-[#1C212B] border border-[#2D333E] text-green-400">
+                v9.0
+              </span>
             </div>
-          </a>
+            <span className="text-[10px] text-green-500 font-mono flex items-center gap-1 leading-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+              {syncStatus === 'live' ? 'SHEET SYNC ACTIVE' : 'CACHE MODE ACTIVE'}
+            </span>
+          </div>
+        </a>
+      </div>
 
-          {/* Right Header Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Sync indicator */}
-            <div
-              className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
-                syncStatus === 'live'
-                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                  : syncStatus === 'offline'
-                  ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                  : 'bg-neutral-800 border-neutral-700 text-neutral-400'
-              }`}
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  syncStatus === 'live'
-                    ? 'bg-emerald-400 animate-pulse'
-                    : syncStatus === 'offline'
-                    ? 'bg-amber-400'
-                    : 'bg-neutral-500'
-                }`}
-              />
-              <span className="capitalize">{syncStatus === 'live' ? 'Online Sync' : syncStatus}</span>
+      {/* Right Actions & Density Controls */}
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* Environment Status Badge */}
+        <div className="hidden lg:flex items-center gap-4 border-r border-[#252A34] pr-4">
+          <div className="text-right">
+            <div className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">
+              Data Pipeline
             </div>
-
-            {/* Refresh Button */}
-            <button
-              id="header-refresh-btn"
-              onClick={onRefresh}
-              disabled={isLoading}
-              title="Perbarui Data dari Google Sheets"
-              className="p-2 rounded-xl text-neutral-400 hover:text-indigo-400 hover:bg-neutral-800/80 transition-all active:scale-95 disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-indigo-400' : ''}`} />
-            </button>
-
-            {/* Favorites Toggle */}
-            <button
-              id="header-fav-btn"
-              onClick={toggleFavFilter}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                isFavFilterActive
-                  ? 'bg-rose-500/20 border border-rose-500/40 text-rose-300 shadow-sm shadow-rose-500/10'
-                  : 'bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-300'
-              }`}
-            >
-              <Heart
-                className={`w-3.5 h-3.5 ${
-                  isFavFilterActive ? 'fill-rose-500 text-rose-500' : 'text-neutral-400'
-                }`}
-              />
-              <span className="hidden xs:inline">Favorit</span>
-              {favoritesCount > 0 && (
-                <span className="bg-rose-500/30 text-rose-200 text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded-full">
-                  {favoritesCount}
-                </span>
-              )}
-            </button>
-
-            {/* Theme Toggle */}
-            <button
-              id="header-theme-toggle"
-              onClick={toggleTheme}
-              className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-amber-300 transition-all active:scale-95"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? <Moon className="w-4 h-4 text-indigo-300" /> : <Sun className="w-4 h-4 text-amber-400" />}
-            </button>
+            <div className="text-xs font-mono text-gray-300 flex items-center gap-1 justify-end">
+              <Database className="w-3 h-3 text-blue-400" /> Google Sheets
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">
+              Sync Mode
+            </div>
+            <div className={`text-xs font-mono ${syncStatus === 'live' ? 'text-green-400' : 'text-yellow-400'}`}>
+              {syncStatus === 'live' ? 'Live Stream' : 'Local Fallback'}
+            </div>
           </div>
         </div>
+
+        {/* Sync Indicator Pill */}
+        <div
+          className={`flex items-center gap-1.5 bg-[#1C212B] px-2.5 py-1 rounded border border-[#2D333E] text-[11px] font-mono ${
+            syncStatus === 'live'
+              ? 'text-green-400'
+              : syncStatus === 'offline'
+              ? 'text-yellow-400'
+              : 'text-gray-400'
+          }`}
+        >
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              syncStatus === 'live'
+                ? 'bg-green-500'
+                : syncStatus === 'offline'
+                ? 'bg-yellow-500'
+                : 'bg-gray-500'
+            }`}
+          />
+          <span className="uppercase text-[10px] font-bold tracking-wider">
+            {syncStatus === 'live' ? 'ONLINE' : syncStatus === 'offline' ? 'OFFLINE' : 'LOCAL'}
+          </span>
+        </div>
+
+        {/* Refresh Button */}
+        <button
+          id="header-refresh-btn"
+          onClick={onRefresh}
+          disabled={isLoading}
+          title="Perbarui Data dari Google Sheets"
+          className="h-8 px-2.5 rounded bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-gray-300 hover:text-green-400 text-xs font-mono flex items-center gap-1.5 transition-colors disabled:opacity-50"
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-green-400' : ''}`} />
+          <span className="hidden sm:inline text-[11px]">SYNC</span>
+        </button>
+
+        {/* Favorites Toggle */}
+        <button
+          id="header-fav-btn"
+          onClick={toggleFavFilter}
+          className={`h-8 px-2.5 rounded border text-xs font-mono flex items-center gap-1.5 transition-colors ${
+            isFavFilterActive
+              ? 'bg-[#2D1B24] border-red-500/50 text-red-400'
+              : 'bg-[#161B22] hover:bg-[#1C212B] border-[#30363D] text-gray-300'
+          }`}
+        >
+          <Heart
+            className={`w-3.5 h-3.5 ${
+              isFavFilterActive ? 'fill-red-500 text-red-500' : 'text-gray-400'
+            }`}
+          />
+          <span className="hidden xs:inline text-[11px]">FAV</span>
+          {favoritesCount > 0 && (
+            <span className="bg-red-500/20 text-red-300 text-[10px] font-mono px-1 rounded">
+              {favoritesCount}
+            </span>
+          )}
+        </button>
+
+        {/* Theme Toggle */}
+        <button
+          id="header-theme-toggle"
+          onClick={toggleTheme}
+          className="h-8 w-8 rounded bg-[#161B22] hover:bg-[#1C212B] border border-[#30363D] text-gray-400 hover:text-yellow-400 flex items-center justify-center transition-colors"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? <Moon className="w-3.5 h-3.5 text-blue-300" /> : <Sun className="w-3.5 h-3.5 text-yellow-400" />}
+        </button>
       </div>
     </header>
   );
 };
+

@@ -315,7 +315,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-950 text-neutral-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="min-h-screen flex flex-col bg-[#0B0D11] text-[#E5E7EB] font-sans selection:bg-green-500/30 selection:text-green-200">
       {/* Header Navigation */}
       <Header
         theme={theme}
@@ -329,7 +329,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 py-2 sm:py-3">
         {/* Hero Section */}
         <Hero onQuickCategorySelect={(tag) => setSearchQuery(tag)} />
 
@@ -367,20 +367,22 @@ export default function App() {
         )}
 
         {/* Asset Collection Section Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg sm:text-xl font-bold text-neutral-100 tracking-tight flex items-center gap-2">
-            <span>Koleksi Asset</span>
-            <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-400 font-normal">
-              {filteredAssets.length} item
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold text-gray-200 uppercase tracking-wider">
+              ASSET_INDEX
+            </h2>
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#161B22] text-green-400 border border-[#252A34]">
+              {filteredAssets.length} ITEMS
             </span>
-          </h2>
+          </div>
 
           {isFiltered && (
             <button
               onClick={handleResetFilters}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+              className="text-[11px] font-mono text-green-400 hover:underline transition-colors"
             >
-              Reset filter
+              [RESET FILTERS]
             </button>
           )}
         </div>
@@ -415,7 +417,7 @@ export default function App() {
 
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-neutral-900/95 border border-indigo-500/40 text-neutral-100 text-xs font-medium shadow-2xl backdrop-blur-md animate-bounce-short flex items-center gap-2">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded bg-[#11141A] border border-green-500/40 text-gray-200 text-xs font-mono shadow-2xl backdrop-blur-md flex items-center gap-2">
           <span>{toastMessage}</span>
         </div>
       )}
